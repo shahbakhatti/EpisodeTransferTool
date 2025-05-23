@@ -22,7 +22,7 @@ jobs:
         Invoke-ps2exe -InputFile $inputFile -OutputFile $outputFile
 
     - name: Upload EXE as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3.1.2
       with:
         name: EpisodeTransferTool-exe
         path: EpisodeTransferTool.exe
