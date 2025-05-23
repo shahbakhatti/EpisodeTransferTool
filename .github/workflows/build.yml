@@ -1,0 +1,28 @@
+name: Build PS1 to EXE
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install PS2EXE module
+      run: Install-Module -Name ps2exe -Scope CurrentUser -Force
+
+    - name: Convert PS1 to EXE
+      run: |
+        $inputFile = "${{ github.workspace }}\EpisodeTransferTool.ps1"
+        $outputFile = "${{ github.workspace }}\EpisodeTransferTool.exe"
+        Invoke-ps2exe -InputFile $inputFile -OutputFile $outputFile
+
+    - name: Upload EXE as artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: EpisodeTransferTool-exe
+        path: EpisodeTransferTool.exe
